@@ -1,0 +1,19 @@
+# Ignore Python cache directories and compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore local virtual environment
+wa-catalog-ai/
+venv/
+env/
+
+# Ignore environment variables file (security best practice)
+.env
+
+# Ignore local SQLite database so it doesn't overwrite production data
+*.sqlite
+*.db
+
+# Ignore version control
+.git/

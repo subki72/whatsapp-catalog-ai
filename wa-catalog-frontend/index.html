@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cloud Catalog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+
+    <div class="app-container">
+        
+        <header class="app-header">
+            <h1 class="logo-title"><span class="logo-icon"></span> KatalogKu</h1>
+            <p class="subtitle">Etalase Digital Otomatis Anda</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="phoneInput" placeholder="Masukkan Nomor WA (Misal: 62812...)">
+                <button id="searchBtn" class="primary-btn">Cari Katalog</button>
+            </div>
+            <p id="statusMessage" class="status-msg">Silakan masukkan nomor Anda untuk melihat katalog.</p>
+        </section>
+
+        <main id="catalogGrid" class="catalog-grid"></main>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
