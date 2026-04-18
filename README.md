@@ -61,11 +61,10 @@ Extracted result is upserted into SQLite
 ```
 
 ## Screenshots
-```md
+
 ![Homepage](docs/screenshots/homepage.png)
 ![Filter By Phone](docs/screenshots/filter-phone.png)
 ![Swagger Docs](docs/screenshots/swagger-docs.png)
-```
 
 ## Project Structure
 
