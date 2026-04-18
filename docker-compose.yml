@@ -9,4 +9,7 @@ services:
       - ./data:/app/data
     env_file:
       - .env
+    environment:
+      RUN_SEED_ON_STARTUP: "true"
+      FORCE_RESEED: "false"
     restart: unless-stopped

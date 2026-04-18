@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://127.0.0.1:8001/api/v1/whatsapp-catalog"
+url = "http://127.0.0.1:8000/api/v1/whatsapp-catalog"
 
 payload = {
     "sender": "6281234567890",

@@ -12,6 +12,7 @@ body {
     color: #2c3e50;
     overflow-x: hidden;
     position: relative;
+    line-height: 1.5;
 }
 
 /* Cloud Background Decoration */
@@ -53,7 +54,7 @@ body {
 .app-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: clamp(20px, 4vw, 40px) clamp(14px, 3vw, 24px) 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,7 +70,7 @@ body {
 }
 
 .logo-title {
-    font-size: 3.5rem;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: 800;
     color: #0056b3;
     text-shadow: 2px 2px 10px rgba(255,255,255,0.8);
@@ -86,7 +87,7 @@ body {
 }
 
 .subtitle {
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
     color: #1c4a78;
     font-weight: 600;
     margin-top: 5px;
@@ -95,6 +96,7 @@ body {
 /* Search Box (Glassmorphism) */
 .search-section {
     width: 100%;
+    max-width: 960px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,8 +105,11 @@ body {
 
 .search-box {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
     width: 100%;
-    max-width: 600px;
+    max-width: 760px;
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -120,11 +125,12 @@ body {
 }
 
 .search-box input {
-    flex: 1;
+    flex: 1 1 240px;
+    min-width: 0;
     border: none;
     background: transparent;
-    padding: 15px 25px;
-    font-size: 1.05rem;
+    padding: 15px 22px;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
     color: #004085;
     outline: none;
     font-weight: 600;
@@ -135,13 +141,19 @@ body {
 }
 
 .primary-btn {
+    min-width: 150px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     background: #007bff;
     color: white;
-    padding: 12px 30px;
+    padding: 12px 22px;
     border-radius: 25px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: clamp(0.92rem, 1.3vw, 1rem);
+    white-space: nowrap;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
@@ -153,18 +165,19 @@ body {
 
 .status-msg {
     margin-top: 15px;
-    font-size: 0.95rem;
+    max-width: 760px;
+    font-size: clamp(0.9rem, 1.4vw, 0.95rem);
     color: #446e9b;
     font-weight: 600;
-    min-height: 20px;
+    min-height: 44px;
     text-align: center;
 }
 
 /* Responsive Catalog Grid */
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 25px);
     width: 100%;
 }
 
@@ -175,7 +188,7 @@ body {
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 20px;
-    padding: 25px;
+    padding: clamp(18px, 2vw, 25px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 0;
@@ -196,14 +209,14 @@ body {
 }
 
 .card-title {
-    font-size: 1.4rem;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
     color: #004085;
     font-weight: 800;
     margin-bottom: 5px;
 }
 
 .card-location {
-    font-size: 0.85rem;
+    font-size: clamp(0.82rem, 1.2vw, 0.9rem);
     color: #007bff;
     display: flex;
     align-items: center;
@@ -212,7 +225,7 @@ body {
 }
 
 .card-body h4 {
-    font-size: 0.95rem;
+    font-size: clamp(0.82rem, 1.2vw, 0.95rem);
     color: #2c3e50;
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -225,10 +238,10 @@ body {
 }
 .menu-list li {
     background: rgba(255, 255, 255, 0.7);
-    padding: 6px 12px;
+    padding: 8px 12px;
     border-radius: 8px;
     margin-bottom: 6px;
-    font-size: 0.9rem;
+    font-size: clamp(0.84rem, 1.2vw, 0.92rem);
     color: #34495e;
     display: flex;
     align-items: center;
@@ -253,7 +266,7 @@ body {
     text-transform: uppercase;
 }
 .usp-box p {
-    font-size: 0.9rem;
+    font-size: clamp(0.84rem, 1.2vw, 0.92rem);
     color: #006064;
     font-style: italic;
     font-weight: 600;
@@ -280,13 +293,20 @@ body {
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* Tablet: 3 columns */
-@media screen and (max-width: 1100px) {
+/* Desktop kecil / tablet landscape */
+@media screen and (max-width: 1180px) {
     .catalog-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    .logo-title {
-        font-size: 3rem;
+}
+
+/* Tablet */
+@media screen and (max-width: 900px) {
+    .search-box {
+        max-width: 100%;
+    }
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     .logo-icon {
         left: -50px;
@@ -294,42 +314,48 @@ body {
     }
 }
 
-/* Small tablet: 2 columns */
-@media screen and (max-width: 850px) {
+/* Mobile */
+@media screen and (max-width: 600px) {
+    .cloud {
+        opacity: 0.35;
+    }
+    .search-box {
+        padding: 10px;
+        border-radius: 24px;
+    }
+    .search-box input {
+        width: 100%;
+        flex-basis: 100%;
+        padding: 14px 18px;
+    }
+    .primary-btn {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 0;
+    }
     .catalog-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .logo-title {
+        margin-left: 10px;
+    }
+    .logo-icon {
+        left: -32px;
+        font-size: 1.8rem;
+        top: 2px;
     }
 }
 
-/* Mobile: 2 columns (compact) */
-@media screen and (max-width: 600px) {
-    .catalog-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+/* HP kecil */
+@media screen and (max-width: 420px) {
+    .search-box {
+        gap: 8px;
     }
-    .app-container {
-        padding: 20px 10px;
+    .primary-btn {
+        flex-basis: 100%;
+        width: 100%;
     }
-    .logo-title {
-        font-size: 2.5rem;
-        margin-left: 15px;
-    }
-    .logo-icon {
-        left: -40px;
-        font-size: 2rem;
-        top: 3px;
-    }
-    .card-title {
-        font-size: 1.1rem;
-    }
-    .card-body h4 {
-        font-size: 0.85rem;
-    }
-    .menu-list li {
-        font-size: 0.8rem;
-        padding: 4px 8px;
-    }
-    .usp-box p {
-        font-size: 0.8rem;
+    .status-msg {
+        min-height: 64px;
     }
 }
