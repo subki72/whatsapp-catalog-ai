@@ -10,12 +10,17 @@ pinned: false
 
 # WhatsApp Catalog AI
 
-A FastAPI-based middleware that receives unstructured WhatsApp messages, extracts structured business catalog data using an LLM, stores the results in SQLite, and serves them through a REST API and a responsive frontend.
+A FastAPI-based middleware that receives unstructured WhatsApp messages, extracts structured business catalog data using an LLM, stores the results in a database, and serves them through a REST API and a responsive frontend.
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?logo=fastapi&logoColor=white)
-![SQLite](https://img.shields.io/badge/Database-SQLite-lightgrey)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Deployment-Docker-blue?logo=docker&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hosted-Hugging%20Face%20Spaces-yellow?logo=huggingface&logoColor=white)
+
+## Live Demo
+
+🚀 **[Open Live App on Hugging Face Spaces](https://huggingface.co/spaces/zeev72/whatsapp-catalog-ai)**
 
 ## Overview
 
@@ -23,7 +28,7 @@ This project is intended for workflows where:
 
 - incoming WhatsApp messages are unstructured
 - an AI model is needed to extract catalog information
-- the extracted data should be stored in a lightweight local database
+- the extracted data should be stored in a persistent cloud database
 - the catalog must be accessible through a simple web interface
 
 ## Features
@@ -31,12 +36,12 @@ This project is intended for workflows where:
 - AI-powered extraction for `product_name`, `location`, `menus`, and `unique_selling_point`
 - WhatsApp webhook endpoint with background processing
 - per-sender rate limiting
-- SQLite persistence via SQLAlchemy
+- database persistence via SQLAlchemy (supports both SQLite and PostgreSQL)
 - automatic database seeding on container startup
 - seed logic with upsert behavior per `user_id`
-- responsive frontend for mobile, tablet, and desktop
+- built-in responsive frontend served directly by FastAPI
 - frontend default view that shows all catalogs before filtering by WhatsApp number
-- Windows helper scripts for Docker-based testing and database reset
+- automatic deployment to Hugging Face Spaces via GitHub Actions
 
 ## Tech Stack
 
@@ -44,11 +49,12 @@ This project is intended for workflows where:
 |---|---|
 | Backend | FastAPI, Uvicorn |
 | AI / LLM | LangChain, Groq |
-| Database | SQLite, SQLAlchemy |
+| Database | PostgreSQL (production), SQLite (local dev) |
 | Configuration | Pydantic Settings |
-| Frontend | HTML, CSS, JavaScript |
+| Frontend | HTML, CSS, JavaScript (served by FastAPI) |
 | Testing | Pytest, HTTPX |
-| Deployment | Docker, Docker Compose |
+| Deployment | Docker, Hugging Face Spaces |
+| CI/CD | GitHub Actions |
 
 ## Application Flow
 
@@ -62,12 +68,14 @@ POST /api/v1/whatsapp-catalog
 Background task calls the AI extractor
       |
       v
-Extracted result is upserted into SQLite
+Extracted result is upserted into PostgreSQL
       |
-      +--> GET /api/v1/catalogs/                -> display all catalogs
+      +--> GET /               -> frontend UI (KatalogKu)
+      |
+      +--> GET /api/v1/catalogs/                -> all catalogs (JSON)
       |
       `--> GET /api/v1/catalogs/users/{user_id}/catalogs
-                                               -> filter catalogs by WhatsApp number
+                                               -> filter by WhatsApp number (JSON)
 ```
 
 ## Screenshots
@@ -79,7 +87,10 @@ Extracted result is upserted into SQLite
 ## Project Structure
 
 ```text
-wa-catalog-backend/
+whatsapp-catalog-ai/
+|- .github/
+|  `- workflows/
+|     `- huggingface.yml        # auto-sync to HF Spaces on push
 |- app/
 |  |- api/
 |  |  |- catalog.py
@@ -94,248 +105,160 @@ wa-catalog-backend/
 |  `- services/
 |     `- ai_extractor.py
 |- tests/
-|  `- test_api.py
+|  |- test_api.py
+|  `- test_webhook.py
 |- wa-catalog-frontend/
 |  |- app.js
 |  |- index.html
 |  `- styles.css
-|- data/
 |- docs/
 |  `- screenshots/
-|     `- README.md
-|- docker-compose.yml
 |- docker-entrypoint.sh
 |- Dockerfile
 |- main.py
-|- reset-db.bat
-|- seed.py
-`- test.bat
+|- requirements.txt
+`- seed.py
 ```
 
-## Environment
+## Deployment (Hugging Face Spaces)
 
-Create a `.env` file in the project root:
+This project is deployed on **Hugging Face Spaces** using Docker. Deployment is fully automated:
+
+1. Push code to the `main` branch on GitHub.
+2. GitHub Actions (`.github/workflows/huggingface.yml`) automatically syncs the code to Hugging Face Spaces.
+3. Hugging Face builds the Docker container and starts the application.
+
+### Required Secrets
+
+#### GitHub Repository Secrets
+
+| Secret | Description |
+|---|---|
+| `HF_TOKEN` | Hugging Face Access Token (Write) for auto-sync |
+
+#### Hugging Face Space Secrets
+
+Set these in **Space Settings > Variables and secrets**:
+
+| Secret | Description |
+|---|---|
+| `GROQ_API_KEY` | API key for Groq LLM |
+| `DATABASE_URL` | PostgreSQL connection string (e.g., from Supabase) |
+| `LANGCHAIN_TRACING_V2` | `true` to enable LangSmith tracing |
+| `LANGCHAIN_ENDPOINT` | `https://api.smith.langchain.com` |
+| `LANGCHAIN_API_KEY` | LangSmith API key |
+| `LANGCHAIN_PROJECT` | LangSmith project name |
+
+### Database
+
+The production deployment uses **PostgreSQL** via [Supabase](https://supabase.com/) (free tier). Use the **Connection Pooler** URI (port `6543`) instead of the direct connection to avoid IPv6 issues on Hugging Face.
+
+Example `DATABASE_URL` format:
+
+```
+postgresql://postgres.xxxxx:[PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres
+```
+
+## Local Development
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/subki72/whatsapp-catalog-ai.git
+cd whatsapp-catalog-ai
+```
+
+2. Create a `.env` file in the project root:
 
 ```env
 GROQ_API_KEY=your_groq_api_key
+DATABASE_URL=sqlite:///./catalog_db.sqlite
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
-LANGCHAIN_API_KEY=
-LANGCHAIN_PROJECT="Wa bot katalog"
-DATABASE_URL=sqlite:////app/data/catalog_db.sqlite
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+LANGCHAIN_API_KEY=your_langsmith_key
+LANGCHAIN_PROJECT=Wa bot katalog
 ```
 
-Notes:
-
-- the `DATABASE_URL` above is intended for Docker usage
-- do not commit `.env` to GitHub
-- if any API key has been exposed, rotate it immediately
-
-## Running With Docker
-
-The current project workflow is Docker-first.
-
-Start the application with:
+3. Install dependencies:
 
 ```bash
-docker compose up --build
+pip install -r requirements.txt
 ```
 
-Services will be available at:
+4. Seed the database:
 
-- API: `http://127.0.0.1:8000`
-- Swagger UI: `http://127.0.0.1:8000/docs`
+```bash
+python seed.py
+```
 
-When the container starts, the application will:
+5. Start the server:
 
-1. create `/app/data` if it does not exist
-2. create database tables if they do not exist
-3. run `seed.py`
-4. start FastAPI with Uvicorn
+```bash
+uvicorn main:app --reload --port 8000
+```
+
+6. Open `http://127.0.0.1:8000` in your browser to see the frontend UI.
 
 ## Seed Behavior
 
-The current [seed.py](./seed.py) no longer skips execution simply because the database already contains data.
-
-Current behavior:
+The [seed.py](./seed.py) uses upsert logic:
 
 - if a `user_id` does not exist, a new row is inserted
 - if a `user_id` already exists, the row is updated
 - if `FORCE_RESEED=true`, the `catalogs` table is cleared before reseeding
 
-This means new entries added to the seed list can be loaded without deleting the entire database first.
+New entries added to the seed list are loaded without deleting existing data.
 
-To run the seed manually inside the container:
+## API Endpoints
 
-```bash
-docker compose exec -T wa-catalog-backend python seed.py
-```
-
-## Resetting the Database
-
-To remove the current database and load a fresh one from `seed.py`, use:
-
-```bat
-reset-db.bat
-```
-
-This script will:
-
-1. stop the running containers
-2. delete `data\catalog_db.sqlite`
-3. rebuild and restart the containers
-4. print the latest startup and seed logs
-
-## Testing
-
-To run the Docker-based end-to-end test flow:
-
-```bat
-test.bat
-```
-
-This script will:
-
-1. build and start the containers
-2. wait until the API is ready
-3. run `pytest` inside the container
-4. execute a webhook smoke test
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/` | Frontend UI (KatalogKu) |
+| `GET` | `/health` | Health check (JSON) |
+| `GET` | `/docs` | Swagger UI |
+| `POST` | `/api/v1/whatsapp-catalog` | Receives incoming WhatsApp webhook payloads |
+| `GET` | `/api/v1/catalogs/` | Returns all catalogs (JSON) |
+| `GET` | `/api/v1/catalogs/users/{user_id}/catalogs` | Returns catalogs filtered by WhatsApp number |
 
 ## Frontend
 
-The frontend is located in [wa-catalog-frontend](./wa-catalog-frontend).
+The frontend is served directly by FastAPI from the `wa-catalog-frontend/` directory:
+
+- static files (CSS, JS) are mounted at `/static/`
+- the root URL `/` serves the `index.html` page
+- the frontend uses relative API URLs (`/api/v1/catalogs`) so it works on any host
 
 Current behavior:
 
 - when the page loads, all catalogs are displayed by default
 - the WhatsApp number input is used to filter catalogs by user
 - the `Show All` button restores the full catalog list
-- the layout has been optimized for mobile, tablet, and desktop screens
-
-Once the backend is running, open:
-
-- `wa-catalog-frontend/index.html`
-
-Make sure `app.js` points to the correct backend API:
-
-- `http://127.0.0.1:8000/api/v1/catalogs`
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/` | Health check |
-| `POST` | `/api/v1/whatsapp-catalog` | Receives incoming WhatsApp webhook payloads |
-| `GET` | `/api/v1/catalogs/` | Returns all catalogs |
-| `GET` | `/api/v1/catalogs/users/{user_id}/catalogs` | Returns catalogs filtered by WhatsApp number |
-
-## Local Development Without Docker
-
-Docker is the recommended way to run this project. If you want to run it locally, you need to:
-
-1. change `DATABASE_URL` to a local path such as `sqlite:///./catalog_db.sqlite`
-2. install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. start the server:
-
-```bash
-uvicorn main:app --reload --port 8000
-```
-
-4. run the seed:
-
-```bash
-python seed.py
-```
-
-## Important Notes
-
-- the Docker SQLite database is stored in the `data/` directory
-- changes in `seed.py` do not automatically remove old data unless you reset the database or enable `FORCE_RESEED=true`
-- `.env` contains secrets and must not be published
+- the layout is responsive for mobile, tablet, and desktop screens
 
 ## Troubleshooting
 
-### 1. New data added to `seed.py` does not appear in the frontend
+### The frontend shows "Gagal terhubung ke server"
 
-Common causes:
+- ensure the backend is running
+- check the browser console for CORS or network errors
+- for local development, verify `DATABASE_URL` in `.env`
 
-- the old database in `data/` is still being used
-- the seed has not been run again
-- the container has not been rebuilt after the change
+### Database connection fails on Hugging Face
 
-Solutions:
+- use the Supabase **Connection Pooler** URI (not direct connection)
+- the pooler URL uses port `6543` and a hostname like `aws-0-...pooler.supabase.com`
+- direct connections (port `5432`, hostname `db.xxx.supabase.co`) may fail due to IPv6
 
-```bat
-reset-db.bat
-```
+### `seed.py` fails locally
 
-Or run the seed manually:
+- ensure dependencies are installed: `pip install -r requirements.txt`
+- ensure `DATABASE_URL` in `.env` points to a valid local or remote database
 
-```bash
-docker compose exec -T wa-catalog-backend python seed.py
-```
+## Important Notes
 
-### 2. The frontend cannot fetch data
-
-Check the following:
-
-- the backend is running at `http://127.0.0.1:8000`
-- `wa-catalog-frontend/app.js` points to the correct port
-- the container did not fail during startup
-
-To inspect logs:
-
-```bash
-docker compose logs --tail=200
-```
-
-### 3. `python seed.py` fails when run locally
-
-Typical causes:
-
-- local Python dependencies are not installed
-- `DATABASE_URL` is still pointing to the Docker path `/app/data/...`
-
-Local fix:
-
-```bash
-pip install -r requirements.txt
-```
-
-Then change `DATABASE_URL` to a local path, for example:
-
-```env
-DATABASE_URL=sqlite:///./catalog_db.sqlite
-```
-
-### 4. The container starts, but old data still appears
-
-This is expected if `data/catalog_db.sqlite` still exists. The Docker bind mount preserves the existing database file.
-
-Use:
-
-```bat
-reset-db.bat
-```
-
-### 5. Docker tests fail in `test.bat`
-
-Check the following:
-
-- Docker Desktop is running
-- port `8000` is not already occupied
-- `.env` exists in the project root
-
-For detailed logs:
-
-```bash
-docker compose logs --tail=200
-```
+- `.env` contains secrets and must not be published to GitHub
+- if any API key has been exposed, rotate it immediately
+- the GitHub Actions workflow automatically syncs to Hugging Face on every push to `main`
 
 ## License
 
