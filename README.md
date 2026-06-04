@@ -1,3 +1,13 @@
+---
+title: WhatsApp Catalog AI
+emoji: 📦
+colorFrom: green
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # WhatsApp Catalog AI
 
 A FastAPI-based middleware that receives unstructured WhatsApp messages, extracts structured business catalog data using an LLM, stores the results in SQLite, and serves them through a REST API and a responsive frontend.
