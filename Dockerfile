@@ -11,6 +11,6 @@ COPY . .
 RUN mkdir -p /app/data
 RUN chmod +x /app/docker-entrypoint.sh
 
-EXPOSE 8000
+EXPOSE 7860 8000
 
 CMD ["sh", "/app/docker-entrypoint.sh"]
