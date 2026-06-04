@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+pydantic-settings
+python-dotenv
+langchain
+langchain-groq
+pytest
+pytest-asyncio
+pytest-mock
+httpx
+psycopg2-binary

@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  wa-catalog-backend:
+    build: .
+    container_name: wa-catalog-ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      RUN_SEED_ON_STARTUP: "true"
+      FORCE_RESEED: "false"
+    restart: unless-stopped
