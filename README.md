@@ -260,6 +260,4 @@ Current behavior:
 - if any API key has been exposed, rotate it immediately
 - the GitHub Actions workflow automatically syncs to Hugging Face on every push to `main`
 
-## License
 
-MIT
