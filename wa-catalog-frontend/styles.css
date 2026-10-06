@@ -293,7 +293,7 @@ body {
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* Desktop kecil / tablet landscape */
+/* Small desktop / landscape tablet */
 @media screen and (max-width: 1180px) {
     .catalog-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -346,7 +346,7 @@ body {
     }
 }
 
-/* HP kecil */
+/* Small phones */
 @media screen and (max-width: 420px) {
     .search-box {
         gap: 8px;

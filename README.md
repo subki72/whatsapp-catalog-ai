@@ -37,7 +37,7 @@ This project is intended for workflows where:
 - WhatsApp webhook endpoint with background processing
 - per-sender rate limiting
 - database persistence via SQLAlchemy (supports both SQLite and PostgreSQL)
-- automatic database seeding on container startup
+- optional database seeding on container startup (RUN_SEED_ON_STARTUP=true)
 - seed logic with upsert behavior per `user_id`
 - built-in responsive frontend served directly by FastAPI
 - frontend default view that shows all catalogs before filtering by WhatsApp number

@@ -3,7 +3,7 @@ set -eu
 
 mkdir -p /app/data
 
-if [ "${RUN_SEED_ON_STARTUP:-true}" = "true" ]; then
+if [ "${RUN_SEED_ON_STARTUP:-false}" = "true" ]; then
   python seed.py
 fi
 

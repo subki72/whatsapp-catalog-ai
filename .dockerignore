@@ -1,0 +1,36 @@
+# Environment variables and secrets
+.env
+.env.*
+
+# Local SQLite databases
+*.sqlite
+*.sqlite3
+*.db
+catalog_db.sqlite
+
+# Git metadata
+.git
+.gitignore
+.gitattributes
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.benchmarks/
+.coverage
+htmlcov/
+
+# Tests & development files
+tests/
+scripts/
+project-docs/
+Prompt/
+qa-report/
+docs/
+PRODUCTION-READINESS-ASSESSMENT.md
+.github/
+

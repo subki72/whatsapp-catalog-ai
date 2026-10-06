@@ -1,29 +1,27 @@
+"""Application-wide logging setup."""
+
 import logging
 import sys
 
-def setup_logger():
-    """
-    Configures and returns a standard logger for the application.
+
+def setup_logger() -> logging.Logger:
+    """Configures and returns a standard logger for the application.
+
     Logs are written to standard output.
     """
-    logger = logging.getLogger("wa_catalog_bot")
-    
+    app_logger = logging.getLogger("wa_catalog_bot")
 
-    if not logger.handlers:
-        logger.setLevel(logging.INFO)
-        
+    if not app_logger.handlers:
+        app_logger.setLevel(logging.INFO)
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-        formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        )
-        
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(formatter)
 
-        ch = logging.StreamHandler(sys.stdout)
-        ch.setLevel(logging.INFO)
-        ch.setFormatter(formatter)
-        
-        logger.addHandler(ch)
-        
-    return logger
+        app_logger.addHandler(console_handler)
+
+    return app_logger
+
 
 logger = setup_logger()
