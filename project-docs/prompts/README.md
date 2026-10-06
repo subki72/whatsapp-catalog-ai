@@ -9,7 +9,7 @@ Seluruh prompt telah dirapikan penamaannya menggunakan konvensi *kebab-case* des
 ## 🗂️ Struktur Direktori
 
 ```
-Prompt/
+project-docs/prompts/
 ├── 01-setup-and-planning/        # Inisiasi, pemilihan arsitektur, & audit awal
 ├── 02-coding-and-standards/      # Standar penulisan kode & senior craftsmanship
 ├── 03-code-analysis-and-docs/    # Pemahaman kode, alur data, & dokumentasi
@@ -67,6 +67,7 @@ Pemeriksaan sistematis terhadap bug logika, celah keamanan, kesiapan production,
 | [`qa-end-to-end-audit.md`](./04-qa-audit-and-security/qa-end-to-end-audit.md) | **QA End-to-End Audit**: Audit menyeluruh skala besar mencakup logika kode, bisnis, UI, UX, Database, API, dan security dengan strategi hemat context. |
 | [`qa-code-quality-audit.md`](./04-qa-audit-and-security/qa-code-quality-audit.md) | **Code Quality Reviewer**: Audit cara penulisan kode di level teknis (performa, memori, tipe data, risiko bug) dengan output modular ke file markdown. |
 | [`production-readiness-audit.md`](./04-qa-audit-and-security/production-readiness-audit.md) | **Production-Readiness Audit**: Evaluasi checklist kesiapan peluncuran sistem ke lingkungan production (skalabilitas, monitoring, failover). |
+| [`prompt_qa_readability_consistency.md`](./04-qa-audit-and-security/prompt_qa_readability_consistency.md) | **QA Readability & Consistency Audit**: Audit konsistensi bahasa (EN/ID) dan kerapihan penulisan kode tanpa side-effect modifikasi. |
 | [`codebase-confidence-audit.md`](./04-qa-audit-and-security/codebase-confidence-audit.md) | **Codebase Confidence Audit**: AI memetakan bagian codebase yang tingkat keyakinannya rendah dan membutuhkan verifikasi mata manusia. |
 | [`post-task-confidence-report.md`](./04-qa-audit-and-security/post-task-confidence-report.md) | **Honest Confidence Report**: Laporan penutup wajib pasca-task tentang bagian mana yang teruji pasti vs bagian yang masih ada keraguan teknis. |
 
@@ -101,6 +102,7 @@ Materi pembelajaran terstruktur untuk bahasa Rust dan gaya belajar terpersonalis
 | [`rust-learning-mentor-python-to-rust.md`](./07-learning-and-mentoring/rust-learning-mentor-python-to-rust.md) | **Rust Learning Mentor (Python to Rust)**: Instruktur Rust interaktif dengan tempo bertahap yang disesuaikan untuk developer Python. |
 | [`rust-project-analysis-and-learning.md`](./07-learning-and-mentoring/rust-project-analysis-and-learning.md) | **Rust Project Analysis & Learning**: Menguraikan project Rust yang sudah ada menjadi bahan ajar berbasis konsep dan sintaks. |
 | [`rust-syntax-logic-deepdive.md`](./07-learning-and-mentoring/rust-syntax-logic-deepdive.md) | **Rust Syntax & Logic Deep-Dive**: Micro-learning fokus mendalam pada metode, operator (`?`), atau konstruksi sintaks spesifik Rust. |
+| [`prompt_codebase_deep_dive.md`](./07-learning-and-mentoring/prompt_codebase_deep_dive.md) | **Codebase Deep-Dive Explainer**: Menjelaskan arsitektur codebase dari awal hingga akhir per-sintaks dan per-logika dengan detail tinggi. |
 | [`personalized-ai-tutor-stem.docx`](./07-learning-and-mentoring/personalized-ai-tutor-stem.docx) | **Personalized AI Tutor (Top-Down STEM)**: Panduan strategi AI tutor untuk gaya belajar pembaca/penulis berbasis gambaran besar ke detail. |
 
 ---

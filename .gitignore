@@ -49,9 +49,17 @@ logs/
 
 # === Ditambahkan otomatis oleh cleanup ===
 .ruff_cache/
+.mypy_cache/
 .benchmarks/
 htmlcov/
+coverage/
 *.log
 .DS_Store
 Thumbs.db
+*.tmp
+*.bak
+*_backup
+temp/
+tmp/
+.env.local
 

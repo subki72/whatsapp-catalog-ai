@@ -41,7 +41,7 @@ Total findings: **37** (Language Consistency: 8, Readability: 29)
 ---
 
 ## File Laporan Lengkap
-- Referensi Style Terdeteksi: [`qa-report/code-readability/00_style_detected.md`](file:///c:/Users/subki/Downloads/whatsapp-catalog-ai/qa-report/code-readability/00_style_detected.md)
-- Detail Inkonsistensi Bahasa: [`qa-report/code-readability/01_language_consistency.md`](file:///c:/Users/subki/Downloads/whatsapp-catalog-ai/qa-report/code-readability/01_language_consistency.md)
-- Detail Kerapihan Penulisan Kode: [`qa-report/code-readability/02_readability.md`](file:///c:/Users/subki/Downloads/whatsapp-catalog-ai/qa-report/code-readability/02_readability.md)
-- Log Progres Audit: [`qa-report/code-readability/_progress.md`](file:///c:/Users/subki/Downloads/whatsapp-catalog-ai/qa-report/code-readability/_progress.md)
+- Referensi Style Terdeteksi: [`00_style_detected.md`](./00_style_detected.md)
+- Detail Inkonsistensi Bahasa: [`01_language_consistency.md`](./01_language_consistency.md)
+- Detail Kerapihan Penulisan Kode: [`02_readability.md`](./02_readability.md)
+- Log Progres Audit: [`_progress.md`](./_progress.md)

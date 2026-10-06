@@ -33,4 +33,7 @@ qa-report/
 docs/
 PRODUCTION-READINESS-ASSESSMENT.md
 .github/
+requirements-dev.txt
+pytest.ini
+pyproject.toml
 

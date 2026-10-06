@@ -90,6 +90,7 @@ Extracted result is upserted into PostgreSQL
 whatsapp-catalog-ai/
 |- .github/
 |  `- workflows/
+|     |- ci.yml                 # automated tests & coverage CI
 |     `- huggingface.yml        # auto-sync to HF Spaces on push
 |- app/
 |  |- api/
@@ -98,14 +99,25 @@ whatsapp-catalog-ai/
 |  |- core/
 |  |  |- config.py
 |  |  |- database.py
-|  |  `- logger.py
+|  |  |- logger.py
+|  |  `- migrations.py
 |  |- models/
 |  |  |- pydantic_schemas.py
 |  |  `- schema.py
 |  `- services/
 |     `- ai_extractor.py
+|- project-docs/
+|  |- audit-logs/               # centralized QA and readability audit logs
+|  |- documentation/            # production readiness assessments and deep-dives
+|  `- prompts/                  # modular SDLC prompt library
 |- tests/
+|  |- conftest.py
 |  |- test_api.py
+|  |- test_catalog.py
+|  |- test_extractor.py
+|  |- test_health.py
+|  |- test_migrations.py
+|  |- test_seed.py
 |  `- test_webhook.py
 |- wa-catalog-frontend/
 |  |- app.js
@@ -116,7 +128,10 @@ whatsapp-catalog-ai/
 |- docker-entrypoint.sh
 |- Dockerfile
 |- main.py
+|- pyproject.toml
+|- pytest.ini
 |- requirements.txt
+|- requirements-dev.txt
 `- seed.py
 ```
 
