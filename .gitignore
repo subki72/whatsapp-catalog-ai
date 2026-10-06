@@ -46,6 +46,8 @@ share/python-wheels/
 logs/
 .coverage
 .pytest_cache/
+project-docs/
+scripts/
 
 # === Ditambahkan otomatis oleh cleanup ===
 .ruff_cache/

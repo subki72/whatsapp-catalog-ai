@@ -1,6 +1,5 @@
 ---
 title: WhatsApp Catalog AI
-emoji: 📦
 colorFrom: green
 colorTo: blue
 sdk: docker
@@ -20,7 +19,7 @@ A FastAPI-based middleware that receives unstructured WhatsApp messages, extract
 
 ## Live Demo
 
-🚀 **[Open Live App on Hugging Face Spaces](https://huggingface.co/spaces/zeev72/whatsapp-catalog-ai)**
+**[Open Live App on Hugging Face Spaces](https://huggingface.co/spaces/zeev72/whatsapp-catalog-ai)**
 
 ## Overview
 
@@ -106,10 +105,6 @@ whatsapp-catalog-ai/
 |  |  `- schema.py
 |  `- services/
 |     `- ai_extractor.py
-|- project-docs/
-|  |- audit-logs/               # centralized QA and readability audit logs
-|  |- documentation/            # production readiness assessments and deep-dives
-|  `- prompts/                  # modular SDLC prompt library
 |- tests/
 |  |- conftest.py
 |  |- test_api.py
@@ -129,7 +124,6 @@ whatsapp-catalog-ai/
 |- Dockerfile
 |- main.py
 |- pyproject.toml
-|- pytest.ini
 |- requirements.txt
 |- requirements-dev.txt
 `- seed.py
