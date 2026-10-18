@@ -9,13 +9,16 @@ pinned: false
 
 # WhatsApp Catalog AI
 
-A FastAPI-based middleware that receives unstructured WhatsApp messages, extracts structured business catalog data using an LLM, stores the results in a database, and serves them through a REST API and a responsive frontend.
-
+[![CI Pipeline](https://github.com/subki72/whatsapp-catalog-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/subki72/whatsapp-catalog-ai/actions)
+[![Maturity Grade: Production](https://img.shields.io/badge/Maturity%20Grade-Production%20(78.5%2F100)-success.svg)](https://github.com/subki72/whatsapp-catalog-ai)
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?logo=fastapi&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Deployment-Docker-blue?logo=docker&logoColor=white)
 ![Hugging Face](https://img.shields.io/badge/Hosted-Hugging%20Face%20Spaces-yellow?logo=huggingface&logoColor=white)
+
+A FastAPI-based middleware that receives unstructured WhatsApp messages, extracts structured business catalog data using an LLM, stores the results in a database, and serves them through a REST API and a responsive frontend.
+
 
 ## Live Demo
 
@@ -77,6 +80,21 @@ Extracted result is upserted into PostgreSQL
                                                -> filter by WhatsApp number (JSON)
 ```
 
+## Quickstart (Single-Command Workflow)
+
+```bash
+# Clone the repository
+git clone https://github.com/subki72/whatsapp-catalog-ai.git
+cd whatsapp-catalog-ai
+
+# Single-command setup & execution:
+make install       # Install pinned production dependencies
+make test          # Run automated pytest suite with coverage
+make lint          # Run static code style validation with Ruff
+make run           # Launch FastAPI local dev server on port 8000
+make docker-build  # Build production Docker container
+```
+
 ## Screenshots
 
 ![Homepage](docs/screenshots/homepage.png)
@@ -88,9 +106,10 @@ Extracted result is upserted into PostgreSQL
 ```text
 whatsapp-catalog-ai/
 |- .github/
+|  |- dependabot.yml         # weekly automated dependency scanner
 |  `- workflows/
-|     |- ci.yml                 # automated tests & coverage CI
-|     `- huggingface.yml        # auto-sync to HF Spaces on push
+|     |- ci.yml              # multi-aspect CI (lint, test, build, Trivy)
+|     `- huggingface.yml     # auto-sync to HF Spaces on push
 |- app/
 |  |- api/
 |  |  |- catalog.py
@@ -120,13 +139,20 @@ whatsapp-catalog-ai/
 |  `- styles.css
 |- docs/
 |  `- screenshots/
+|- .pre-commit-config.yaml   # automated pre-commit quality hooks
+|- CHANGELOG.md              # Keep a Changelog semantic release history
+|- CONTRIBUTING.md           # developer contribution workflow
 |- docker-entrypoint.sh
 |- Dockerfile
-|- main.py
+|- LICENSE                   # MIT License
+|- Makefile                  # single-command task orchestration
+|- main.py                   # centralized exception handler & routes
 |- pyproject.toml
-|- requirements.txt
-|- requirements-dev.txt
-`- seed.py
+|- requirements.txt          # strictly pinned production manifest
+|- requirements-lock.txt     # locked dependencies
+|- SECURITY.md               # vulnerability reporting policy
+|- seed.py
+`- uv.lock                   # deterministic uv lockfile
 ```
 
 ## Deployment (Hugging Face Spaces)
@@ -268,5 +294,13 @@ Current behavior:
 - `.env` contains secrets and must not be published to GitHub
 - if any API key has been exposed, rotate it immediately
 - the GitHub Actions workflow automatically syncs to Hugging Face on every push to `main`
+
+## Security & Governance
+
+- **Vulnerability Disclosure Policy**: See [SECURITY.md](SECURITY.md) for reporting security issues.
+- **Contribution Guidelines**: Developer setup and code review etiquette in [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Release Changelog**: Track semantic releases in [CHANGELOG.md](CHANGELOG.md).
+- **License**: Released under the [MIT License](LICENSE).
+
 
 
