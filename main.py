@@ -78,6 +78,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception) -> Response:
+    """Global exception handler to capture unhandled errors gracefully."""
+    logger.error("Unhandled error on %s: %s", request.url.path, exc, exc_info=True)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"status": "error", "message": "Internal server error", "detail": str(exc)},
+    )
+
+
 app.include_router(webhook.router, prefix="/api/v1", tags=["Webhook"])
 app.include_router(catalog.router, prefix="/api/v1/catalogs", tags=["Catalogs"])
 

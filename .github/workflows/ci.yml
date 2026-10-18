@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Run Pytest Suite & Coverage
+    name: Lint, Test & Build Validation
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,19 @@ jobs:
       - name: Lint with ruff
         run: |
           ruff check .
+          ruff format --check .
 
       - name: Run test suite with coverage
         run: |
           python -m pytest --cov=app --cov-report=term-missing --cov-fail-under=75
+
+      - name: Build Docker container image
+        run: |
+          docker build -t whatsapp-catalog-ai:smoke .
+
+      - name: Scan container image with Trivy for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'whatsapp-catalog-ai:smoke'
+          format: 'table'
+          severity: 'CRITICAL,HIGH'

@@ -1,0 +1,14 @@
+# Locked dependencies for whatsapp-catalog-ai
+fastapi==0.115.6
+uvicorn==0.34.0
+sqlalchemy==2.0.36
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-dotenv==1.0.1
+langchain==0.3.14
+langchain-groq==0.2.2
+tenacity==9.0.0
+httpx==0.28.1
+psycopg2-binary==2.9.10
+pytest==8.3.4
+ruff==0.8.4
